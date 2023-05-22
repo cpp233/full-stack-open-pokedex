@@ -13,6 +13,7 @@ jobs:
         run: |
           echo "Hello World!"
           echo "Hello World2!"
+          echo "add-new-feature!"
       - name: Now it is
         run: |
           date
