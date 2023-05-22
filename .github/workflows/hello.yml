@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - master
+  pull_request:
+    branches: [master]
+    types: [opened, synchronize]
 
 jobs:
   hello_world_job:
@@ -12,6 +15,8 @@ jobs:
       - name: Say hello
         run: |
           echo "Hello World!"
+          echo "Hello World2!"
+          echo "add-new-feature!"
       - name: Now it is
         run: |
           date
