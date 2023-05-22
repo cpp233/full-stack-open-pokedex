@@ -11,6 +11,7 @@ on:
 
 jobs:
   simple_deployment_pipeline:
+    if: ${{ github.event_name == 'push' }}
     # runs-on: ubuntu-22.04
     runs-on: ubuntu-latest
     # defaults:
@@ -54,3 +55,16 @@ jobs:
           command: npm run test:e2e
           start: npm run start-prod
           wait-on: http://localhost:5001
+
+  tag_release:
+    if: ${{ github.event_name == 'push' }} # 只有 push 才更新版本，防止合并也更新版本
+    needs: [simple_deployment_pipeline]    # 等待完成
+    # runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
+    steps:
+      - name: Bump version and push tag
+        uses: anothrNick/github-tag-action@1.36.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Echo version
+        run: echo updated version
