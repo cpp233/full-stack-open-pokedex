@@ -1,0 +1,53 @@
+name: Deployment pipeline
+
+# https://docs.github.com/zh/actions/using-workflows/events-that-trigger-workflows
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  simple_deployment_pipeline:
+    # runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
+    # defaults:
+    #   run:
+    #     working-directory: ./app/
+    strategy:
+      matrix:
+        node-version: [16, 16.20]
+    env:
+      MY_ENV: "MY_ENV"
+    steps:
+      - uses: actions/checkout@v3 # 自动设置运行环境
+      - name: Set up Node
+        uses: actions/setup-node@v2
+        with:
+          # node-version: "16"
+          node-version: ${{ matrix.node-version }}
+
+      - name: npm install pnpm
+        run: npm install  -g pnpm
+
+      - name: pnpm install dependencies
+        run: pnpm install
+
+      - name: lint
+        run: pnpm run eslint
+      - name: build
+        run: pnpm run build
+
+      - name: test
+        run: pnpm run test
+      - name: e2e tests
+        # env:
+        #   ELECTRON_EXTRA_LAUNCH_ARGS: --disable-gpu
+        # uses: cypress-io/github-action@v2
+        uses: cypress-io/github-action@v5
+        with:
+          # browser: chrome
+          # headed: true
+          # component: true
+          command: npm run test:e2e
+          start: npm run start-prod
+          wait-on: http://localhost:5001

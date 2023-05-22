@@ -1,2 +1,5 @@
 dist/
 node_modules/
+_misc/
+cypress/screenshots/
+cypress/videos/
