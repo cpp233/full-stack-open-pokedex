@@ -63,8 +63,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Bump version and push tag
-        uses: anothrNick/github-tag-action@1.36.0
+        uses: anothrNick/github-tag-action@1.66.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Echo version
-        run: echo updated version
+          WITH_V: false
