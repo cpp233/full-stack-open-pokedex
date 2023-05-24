@@ -12,7 +12,7 @@ on:
 jobs:
   simple_deployment_pipeline:
     # https://docs.github.com/en/actions/learn-github-actions/contexts#github-context
-    if: ${{ github.event_name == 'pull_request' && !contains(join(github.event.commits.*.message, ', '), '#skip') }} # 通过测试的才合并
+    if: ${{ github.event_name == 'pull_request' || github.event_name == 'push' && !contains(join(github.event.commits.*.message, ', '), '#skip') }} # 通过测试的才合并
     # runs-on: ubuntu-22.04
     runs-on: ubuntu-latest
     # defaults:
