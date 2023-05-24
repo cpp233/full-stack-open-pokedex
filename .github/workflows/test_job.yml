@@ -27,8 +27,13 @@ jobs:
         run: echo "$COMMIT_MESSAGES"
       - name: logger
         env:
-          COMMITS_STRING: ${{ join(github.event.commits.*.message, ', ') }}
-          IS_CONTAINS: ${{ contains(join(github.event.commits.*.message, ', '), '#skip') }}
+          COMMITS_STRING:  ${{ join(github.event.commits.*.message, ', ') }}
+          IS_CONTAINS:     ${{ contains(join(github.event.commits.*.message, ', '), '#skip') }}
+          IS_NOT_CONTAINS: ${{ !contains(join(github.event.commits.*.message, ', '), '#skip') }}
         run: |
+          echo "-----"
           echo "$COMMITS_STRING"
+          echo "-----"
           echo "$IS_CONTAINS"
+          echo "-----"
+          echo "$IS_NOT_CONTAINS"
