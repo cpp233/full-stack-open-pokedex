@@ -13,7 +13,7 @@ jobs:
   simple_deployment_pipeline:
 
     # https://docs.github.com/en/actions/learn-github-actions/contexts#github-context
-    if: ${{ github.event_name == 'pull_request' || github.event_name == 'push' && !contains(join(github.event.commits.*.message, ', '), '#skip') }}
+    if: ${{ (github.event_name == 'pull_request' || github.event_name == 'push') && !contains(join(github.event.commits.*.message, ', '), '#skip') }}
     # pull_request 或者 push 都可以
     # 如果包含关键字 #skip，则跳过
 
