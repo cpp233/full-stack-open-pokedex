@@ -11,7 +11,7 @@ on:
 
 jobs:
   simple_deployment_pipeline:
-    if: ${{ github.event_name == 'push' }}
+    if: ${{ github.event_name == 'pull_request' }} # 通过测试的才合并
     # runs-on: ubuntu-22.04
     runs-on: ubuntu-latest
     # defaults:
@@ -44,6 +44,7 @@ jobs:
       - name: test
         run: pnpm run test
       - name: e2e tests
+      # https://github.com/Energinet-DataHub/greenforce-frontend/pull/1682/files#diff-e1f2306b160b63399c25840b8740edcc6554c40ca7429ebb6c66b206c56b9c66
         # env:
         #   ELECTRON_EXTRA_LAUNCH_ARGS: --disable-gpu
         # uses: cypress-io/github-action@v2
@@ -70,3 +71,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           WITH_V: true
+          DEFAULT_BUMP : patch
+          DRY_RUN: false # 是否实际生成版本号，还是只打印
