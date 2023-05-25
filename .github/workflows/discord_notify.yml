@@ -15,13 +15,16 @@ jobs:
     steps:
       - uses: actions/checkout@v3 # 自动设置运行环境
 
-      - name: echo test
-        env:
-          MY_KEY: ${{ secrets.TEST }}
-        run: |
-          echo "-----"
-          echo $MY_KEY
-          echo "-----"
+
+      # - name: echo test
+      #   env:
+      #     MY_KEY: ${{ secrets.TEST }}
+      #   run: |
+      #     echo "-----"
+      #     echo $MY_KEY
+      #     echo "-----"
+
+      # 需要在 【Secrets and variables】 中添加
       - name: Test Success
         uses: rjstone/discord-webhook-notify@89b0bf43c2c8514f70d0dcba4a706b904e8a3112
         if: success()
