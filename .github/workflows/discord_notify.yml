@@ -14,6 +14,12 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v3 # 自动设置运行环境
+
+      - name: echo test
+        run: |
+          echo "-----"
+          echo ${{ secrets.TEST }}
+          echo "-----"
       - name: Test Success
         uses: rjstone/discord-webhook-notify@89b0bf43c2c8514f70d0dcba4a706b904e8a3112
         if: success()
