@@ -1,6 +1,5 @@
 name: Deployment pipeline
 
-# https://docs.github.com/zh/actions/using-workflows/events-that-trigger-workflows
 on:
   push:
     branches:
@@ -12,7 +11,6 @@ on:
 jobs:
   simple_deployment_pipeline:
 
-    # https://docs.github.com/en/actions/learn-github-actions/contexts#github-context
     if: ${{ (github.event_name == 'pull_request' || github.event_name == 'push') && !contains(join(github.event.commits.*.message, ', '), '#skip') }}
     # pull_request 或者 push 都可以
     # 如果包含关键字 #skip，则跳过
@@ -72,7 +70,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3 # 自动设置运行环境
       - name: Bump version and push tag
-        uses: anothrNick/github-tag-action@1.61.0
+        uses: anothrNick/github-tag-action@8c8163ef62cf9c4677c8e800f36270af27930f42 # 版本号也不能保证一样，建议用哈希
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           WITH_V: true
